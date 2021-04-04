@@ -22,7 +22,7 @@ extension Color {
 struct ContentView: View {
     let sp = CGFloat(1)
     let gsp = CGFloat(0.5)
-    private var columns: [GridItem] {Array(repeating: GridItem(spacing:sp), count: 3)}
+    private var columns: [GridItem] {Array(repeating: GridItem(spacing:0), count: 3)}
     
     let colorPa:[UInt] = [0x000000,0x111111,0x222222,0x333333,
                           0x444444,0x555555,0x666666,0x777777,
@@ -41,15 +41,16 @@ struct ContentView: View {
                 ) {
                     ForEach(0...15, id: \.self) { indexj in
                         
-                        Section(header: Text("Section \(colorPa[indexj])").font(.title)) {
+                        Section(header: Text("Section \(String(format:"%02X", colorPa[indexj]))").font(.title)) {
                             ForEach(0...15, id: \.self) { index in
                                 ZStack {
-                                    Text("昨日出风的你的很好的哈")
+                                    Text("昨日出风的你的很好的哈\(String(format:"%02X", colorPa[index]))")
                                         .foregroundColor(Color(hex: colorPa[index]))
                                         .padding()
                                 }
                                 .id(UUID())
-//                                .frame(width: (gp.size.width - 4*sp) / 3)
+                                .frame(width:(gp.size.width - 2*sp) / 3,
+                                       height: (gp.size.width - 2*sp) / 3)
                                 .background(Color(hex: colorPa[15-indexj]))
                             }
                         }.id(UUID())
